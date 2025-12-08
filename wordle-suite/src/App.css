@@ -1,0 +1,35 @@
+/* App component styles - additional component-specific styles */
+.app-header {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.keyboard {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 0.4rem;
+  margin-top: 1rem;
+}
+
+.key {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: all 0.1s;
+}
+
+.key:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.key.used {
+  opacity: 0.5;
+}

@@ -1,0 +1,46 @@
+{
+  "name": "wordle-suite",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "A comprehensive Wordle game suite with multiple modes, custom word packs, and advanced hints.",
+  "author": "Your Name",
+  "license": "MIT OR Apache-2.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "tauri-dev": "tauri dev",
+    "tauri-build": "tauri build",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.0",
+    "clsx": "^2.1",
+    "framer-motion": "^10.16",
+    "lucide-react": "^0.408",
+    "react": "^18.3",
+    "react-dom": "^18.3",
+    "zustand": "^4.5"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0",
+    "@types/node": "^20.11",
+    "@types/react": "^18.2",
+    "@types/react-dom": "^18.2",
+    "@typescript-eslint/eslint-plugin": "^7.0",
+    "@typescript-eslint/parser": "^7.0",
+    "@vitejs/plugin-react": "^4.2",
+    "@vitest/ui": "^1.1",
+    "eslint": "^8.56",
+    "eslint-plugin-react": "^7.33",
+    "eslint-plugin-react-hooks": "^4.6",
+    "typescript": "^5.3",
+    "vite": "^5.0",
+    "vite-plugin-svgr": "^4.2",
+    "vitest": "^1.1"
+  }
+}
