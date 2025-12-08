@@ -8,7 +8,7 @@ This document provides a quick reference for each module in the Wordle Suite pro
 
 ## Backend Modules (Rust)
 
-### 📌 `src-tauri/src/engine.rs` - Core Game Logic
+###  `src-tauri/src/engine.rs` - Core Game Logic
 **Purpose**: Pure function for evaluating Wordle guesses
 
 **Key Function**:
@@ -43,7 +43,7 @@ Handles duplicate letters correctly. Example:
 
 ---
 
-### 📌 `src-tauri/src/word_list.rs` - Word Management
+###  `src-tauri/src/word_list.rs` - Word Management
 **Purpose**: Manage word lists and daily word selection
 
 **Main Type**:
@@ -88,7 +88,7 @@ word = WORD_LIST[index]
 
 ---
 
-### 📌 `src-tauri/src/hint_engine.rs` - Solver & Hints
+###  `src-tauri/src/hint_engine.rs` - Solver & Hints
 **Purpose**: Generate optimal hints using entropy-based calculation
 
 **Main Type**:
@@ -149,7 +149,7 @@ GuessHint {
 
 ---
 
-### 📌 `src-tauri/src/db.rs` - SQLite Persistence
+###  `src-tauri/src/db.rs` - SQLite Persistence
 **Purpose**: Store and retrieve player profiles, game states, and statistics
 
 **Main Type**:
@@ -232,7 +232,7 @@ event_log {
 
 ---
 
-### 📌 `src-tauri/src/commands.rs` - Tauri IPC Handlers
+###  `src-tauri/src/commands.rs` - Tauri IPC Handlers
 **Purpose**: Bridge between React frontend and Rust backend
 
 **Key Functions** (exposed as `#[tauri::command]`):
@@ -278,7 +278,7 @@ fn make_guess_cmd(request: GuessRequest, ...) -> Result<..., String>
 
 ---
 
-### 📌 `src-tauri/src/main.rs` - App Entry Point
+###  `src-tauri/src/main.rs` - App Entry Point
 **Purpose**: Initialize Tauri app, setup IPC, manage state
 
 **Key Components**:
@@ -322,7 +322,7 @@ All commands listed with `#[tauri::command]` macro
 
 ## Frontend Modules (React/TypeScript)
 
-### 📌 `src/App.tsx` - Main Game Component
+###  `src/App.tsx` - Main Game Component
 **Purpose**: Render game board and manage game flow
 
 **Key Sections**:
@@ -357,7 +357,7 @@ All commands listed with `#[tauri::command]` macro
 
 ---
 
-### 📌 `src/store/appStore.ts` - State Management
+###  `src/store/appStore.ts` - State Management
 **Purpose**: Centralized global state with Zustand
 
 **State Structure**:
@@ -406,7 +406,7 @@ initializeApp: async (playerName) => {
 
 ---
 
-### 📌 `src/api/gameApi.ts` - Tauri API Client
+###  `src/api/gameApi.ts` - Tauri API Client
 **Purpose**: Type-safe wrapper around Tauri commands
 
 **Key Methods**:
@@ -446,7 +446,7 @@ const result = await gameApi.evaluateGuess("SLATE", "STALE");
 
 ---
 
-### 📌 `src/types/index.ts` - TypeScript Type Definitions
+###  `src/types/index.ts` - TypeScript Type Definitions
 **Purpose**: Centralized types matching Rust structs
 
 **Key Types**:
@@ -478,7 +478,7 @@ export interface GameState { ... }
 
 ---
 
-### 📌 `src/index.css` - Global Styles
+###  `src/index.css` - Global Styles
 **Purpose**: Styling for entire application
 
 **Key Sections**:
@@ -523,7 +523,7 @@ export interface GameState { ... }
 
 ## Configuration Files
 
-### 📌 `Cargo.toml` - Rust Workspace
+###  `Cargo.toml` - Rust Workspace
 **Purpose**: Workspace configuration and shared dependencies
 
 **Workspace Members**:
@@ -546,7 +546,7 @@ export interface GameState { ... }
 
 ---
 
-### 📌 `package.json` - NPM Configuration
+###  `package.json` - NPM Configuration
 **Purpose**: Frontend dependencies and build scripts
 
 **Key Scripts**:
@@ -565,7 +565,7 @@ export interface GameState { ... }
 
 ---
 
-### 📌 `vite.config.ts` - Frontend Build
+###  `vite.config.ts` - Frontend Build
 **Purpose**: Vite configuration for React
 
 **Key Settings**:
@@ -576,7 +576,7 @@ export interface GameState { ... }
 
 ---
 
-### 📌 `tauri.conf.json` - Tauri App Config
+###  `tauri.conf.json` - Tauri App Config
 **Purpose**: App window, bundle, and security settings
 
 **Key Settings**:
@@ -587,7 +587,7 @@ export interface GameState { ... }
 
 ---
 
-### 📌 `.github/workflows/ci-cd.yml` - GitHub Actions
+###  `.github/workflows/ci-cd.yml` - GitHub Actions
 **Purpose**: Automated testing and building
 
 **Matrix Strategy**:
@@ -622,4 +622,4 @@ export interface GameState { ... }
 
 ---
 
-**Each module is focused, testable, and well-documented.** 🎯
+**Each module is focused, testable, and well-documented.**

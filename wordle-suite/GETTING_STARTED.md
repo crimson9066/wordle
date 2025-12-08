@@ -1,6 +1,6 @@
 # Getting Started with Wordle Suite
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before you start, ensure you have:
 
@@ -20,7 +20,7 @@ Before you start, ensure you have:
 
 - **Git** - For version control (optional but recommended)
 
-## 🚀 Quick Start (5 minutes)
+## Quick Start (5 minutes)
 
 ### 1. Navigate to Project Directory
 ```bash
@@ -43,9 +43,9 @@ This will:
 - Compile and run Rust backend
 - Open the app in a new window
 
-🎉 **You're now running Wordle Suite!**
+**You're now running Wordle Suite!**
 
-## 📁 Project Structure at a Glance
+##  Project Structure at a Glance
 
 ```
 wordle-suite/
@@ -72,19 +72,19 @@ wordle-suite/
 └── FEATURES.md           Feature specification
 ```
 
-## 🎮 How to Play
+## How to Play
 
 1. **Start a game**: Click "New Game" or it starts automatically
 2. **Type a guess**: Enter any 5-letter word
 3. **Submit**: Press Enter or click "Submit"
 4. **Interpret feedback**:
-   - 🟩 **Green**: Correct letter in correct position
-   - 🟨 **Yellow**: Correct letter in wrong position
-   - ⬜ **Gray**: Letter not in the word
+   - **Green**: Correct letter in correct position
+   - **Yellow**: Correct letter in wrong position
+   - **Gray**: Letter not in the word
 5. **Win**: Get all letters green in 6 attempts or fewer
 6. **Hints**: Click "Hints" to get suggestions (Entropy-based solver)
 
-## 🛠️ Development Tasks
+## Development Tasks
 
 ### Run Development Mode
 ```bash
@@ -120,7 +120,7 @@ cd src-tauri && cargo clippy && cd ..  # Clippy for Rust
 npm run type-check    # TypeScript compiler check
 ```
 
-## 📚 Key Files to Explore
+##  Key Files to Explore
 
 ### Backend (Learn the Game Logic)
 1. **`src-tauri/src/engine.rs`** (100 lines)
@@ -152,7 +152,7 @@ npm run type-check    # TypeScript compiler check
    - Zustand state management
    - Player, game, and stats state
 
-## 🐛 Common Issues & Troubleshooting
+##  Common Issues & Troubleshooting
 
 ### "cargo: command not found"
 - **Fix**: Install Rust from https://rustup.rs/
@@ -181,7 +181,7 @@ npm run type-check    # TypeScript compiler check
 - **Fix 2**: Check if port 5173 is in use
 - **Fix 3**: In VS Code, close and reopen the terminal
 
-## 📖 Documentation Map
+##  Documentation Map
 
 - **[README.md](./README.md)** - Project overview and features
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Technical design and data flow
@@ -189,7 +189,7 @@ npm run type-check    # TypeScript compiler check
 - **[.github/copilot-instructions.md](./.github/copilot-instructions.md)** - Development guide
 - **Code comments** - Inline documentation in source files
 
-## 🎯 Next Steps After Setup
+## Next Steps After Setup
 
 ### If you want to...
 
@@ -218,7 +218,7 @@ npm run type-check    # TypeScript compiler check
 3. Expose via Tauri command
 4. Load dynamically at startup
 
-## 💡 Tips & Tricks
+## Tips & Tricks
 
 ### Dev Experience
 - **Hot reload**: Changes to `.tsx` files reload instantly
@@ -240,7 +240,7 @@ npm run type-check    # TypeScript compiler check
 - **Memoize components**: React.memo() for expensive renders
 - **Cache results**: HintEngine caches suggestions per game
 
-## 🤝 Contributing
+## Contributing
 
 Want to improve Wordle Suite? Great! Here's how:
 
@@ -252,14 +252,14 @@ Want to improve Wordle Suite? Great! Here's how:
 
 See [README.md](./README.md#contributing) for full guidelines.
 
-## 📞 Support
+##  Support
 
-- 📖 **Tauri docs**: https://tauri.app/
-- 📖 **React docs**: https://react.dev/
-- 📖 **Rust book**: https://doc.rust-lang.org/book/
-- 💬 **GitHub Issues**: Report bugs or ask questions
+-  **Tauri docs**: https://tauri.app/
+-  **React docs**: https://react.dev/
+-  **Rust book**: https://doc.rust-lang.org/book/
+-  **GitHub Issues**: Report bugs or ask questions
 
-## 🎓 Learning Resources
+##  Learning Resources
 
 ### Understand the Core Algorithm
 - Start: `src-tauri/src/engine.rs` - The core `evaluate_guess()` function
@@ -276,7 +276,7 @@ See [README.md](./README.md#contributing) for full guidelines.
 - Next: `src/api/gameApi.ts` - React wrapper
 - Try: Add a new command (e.g., `get_game_history`)
 
-## ✅ Verification Checklist
+## Verification Checklist
 
 Before committing or deploying, ensure:
 
@@ -292,6 +292,6 @@ Before committing or deploying, ensure:
 
 ---
 
-**Ready to build something amazing?** Start with `npm run tauri-dev` and have fun! 🚀
+**Ready to build something amazing?** Start with `npm run tauri-dev` and have fun!
 
 Questions? Check the docs or open an issue on GitHub!

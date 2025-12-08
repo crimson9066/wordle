@@ -248,13 +248,13 @@ Available commands:
 
 ## Security & Privacy
 
-✅ **By default**:
+**By default**:
 - No telemetry
 - No network requests
 - All data local SQLite
 - No authentication needed
 
-🔒 **Optional**:
+**Optional**:
 - Encrypted backups (AES with password)
 - TLS for opt-in cloud sync
 - Integrity checks for word packs
@@ -289,4 +289,4 @@ Available commands:
 4. **Read the code**: Start with `src-tauri/src/engine.rs`
 5. **Explore the UI**: `src/App.tsx`
 
-Enjoy building! 🚀
+Enjoy building!

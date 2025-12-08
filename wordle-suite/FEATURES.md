@@ -1,6 +1,6 @@
 # Wordle Suite - Features Guide
 
-## 🎮 Core Gameplay
+## Core Gameplay
 
 ### Classic Wordle Mode
 - **Rules**: Standard Wordle - 6 attempts to guess a 5-letter word
@@ -15,7 +15,7 @@
 - Visual feedback for each letter state
 - Keyboard input or on-screen keyboard
 
-## 📊 Player Profile & Statistics
+## Player Profile & Statistics
 
 ### Player Profiles
 - Unique ID per install (installs_seed)
@@ -39,7 +39,7 @@
 - Speed Records
 - Custom badges
 
-## 💡 Hint & Solver System
+## Hint & Solver System
 
 ### Entropy-Based Hints
 - **Algorithm**: Information-gain calculation
@@ -66,7 +66,7 @@
 - Position-by-position letter distribution
 - Helps identify likely letters
 
-## 🎨 Customization & Accessibility
+## Customization & Accessibility
 
 ### Themes
 - **Light Theme**: Clean, bright UI (default)
@@ -93,7 +93,7 @@
 - Animation speed
 - Sound effects on/off
 
-## 🎯 Game Modes (Roadmap)
+## Game Modes (Roadmap)
 
 ### Classic Mode (Current)
 - Standard Wordle rules
@@ -125,7 +125,7 @@
 - Time limits
 - Handicaps
 
-## 📦 Word Packs (Roadmap)
+## Word Packs (Roadmap)
 
 ### Local Word Packs
 - CSV format word lists
@@ -145,7 +145,7 @@
 - Download and manage packs
 - Rate and review
 
-## 📱 User Interface
+##  User Interface
 
 ### Main Game Screen
 - Game board with tiles
@@ -175,7 +175,7 @@
 - About/Help
 - Export game history
 
-## 🔔 Notifications & Feedback
+##  Notifications & Feedback
 
 ### In-Game Feedback
 - Invalid word warning
@@ -197,7 +197,7 @@
 - Error sound
 - Toggle-able
 
-## 💾 Data & Persistence
+##  Data & Persistence
 
 ### What Gets Saved
 - Player profile (name, settings, installs_seed)
@@ -222,7 +222,7 @@
 - Encryption with password
 - Version control for backups
 
-## 🎪 Polish & Visual Features
+##  Polish & Visual Features
 
 ### Animations
 - **Tile Flip**: 0.6s smooth 3D flip on feedback
@@ -238,7 +238,7 @@
 - Hover effects on buttons
 - Responsive layout adjustments
 
-## 🔐 Security & Privacy Features
+##  Security & Privacy Features
 
 ### Privacy Protections
 - **No Telemetry**: Off by default, no data collection
@@ -258,7 +258,7 @@
 - TLS for any network communication - future
 - Integrity verification for downloaded packs - future
 
-## 🛠️ Developer Features (Future)
+## Developer Features (Future)
 
 ### Debug Mode
 - Enable via environment variable or settings
@@ -279,7 +279,7 @@
 - Bulk game simulation
 - Statistics validator
 
-## 🌐 Network Features (Roadmap)
+##  Network Features (Roadmap)
 
 ### Local Multiplayer (Opt-in)
 - LAN discovery via mDNS
@@ -304,7 +304,7 @@
 - Improve word selection algorithms
 - Clear privacy policy
 
-## 📈 Metrics & Analytics
+##  Metrics & Analytics
 
 ### Player Metrics
 - Games per day
@@ -320,23 +320,23 @@
 - Engagement: Daily active users, session length
 
 All analytics are:
-- ✅ Opt-in (not enabled by default)
-- ✅ Anonymous (no personal data)
-- ✅ Encrypted (TLS in transit)
-- ✅ Exportable (download your data)
-- ✅ Deletable (wipe your history)
+-- Opt-in (not enabled by default)
+-- Anonymous (no personal data)
+-- Encrypted (TLS in transit)
+-- Exportable (download your data)
+-- Deletable (wipe your history)
 
 ---
 
 ## Feature Roadmap
 
 ### Phase 1 (MVP - Current)
-- ✅ Core Wordle gameplay
-- ✅ Daily words
-- ✅ Statistics tracking
-- ✅ Hints & solver
-- ✅ Theme support
-- ✅ Accessibility basics
+-- Core Wordle gameplay
+-- Daily words
+-- Statistics tracking
+-- Hints & solver
+-- Theme support
+-- Accessibility basics
 
 ### Phase 2 (Polish & Modes)
 - [ ] Additional game modes (Unlimited, Timed, Hard)
@@ -362,4 +362,4 @@ All analytics are:
 
 ---
 
-Built with care for players who love word games and attention to security & privacy. Enjoy! 🎮
+Built with care for players who love word games and attention to security & privacy. Enjoy!

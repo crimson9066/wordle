@@ -184,18 +184,18 @@ GitHub Actions:       Full CI/CD matrix
 
 FEATURES INCLUDED:
 
-✅ Core Game Engine      Pure function for guess evaluation
-✅ Daily Words          Deterministic scheduling (no server)
-✅ Word Validation      O(1) lookup
-✅ Hint Engine          Entropy-based solver
-✅ Statistics          Streaks, distributions, averages
-✅ Persistence         SQLite with migrations
-✅ UI Polish           Animations, responsive design
-✅ Theming             Light/dark mode support
-✅ Accessibility       WCAG compliant
-✅ IPC Bridge          Type-safe Tauri communication
-✅ CI/CD               GitHub Actions matrix builds
-✅ Type Safety         Rust + TypeScript throughout
+Core Game Engine      Pure function for guess evaluation
+Daily Words          Deterministic scheduling (no server)
+Word Validation      O(1) lookup
+Hint Engine          Entropy-based solver
+Statistics          Streaks, distributions, averages
+Persistence         SQLite with migrations
+UI Polish           Animations, responsive design
+Theming             Light/dark mode support
+Accessibility       WCAG compliant
+IPC Bridge          Type-safe Tauri communication
+CI/CD               GitHub Actions matrix builds
+Type Safety         Rust + TypeScript throughout
 
 ═══════════════════════════════════════════════════════════════════════════════
 

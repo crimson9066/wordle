@@ -1,6 +1,6 @@
 # Wordle Suite - Project Index
 
-## 🎯 Start Here
+## Start Here
 
 **New to this project?** Read in this order:
 
@@ -32,16 +32,16 @@
 
 ---
 
-## 📚 Documentation by Purpose
+##  Documentation by Purpose
 
 ### I want to...
 
 #### **Understand what was built**
 → [PROJECT_SUMMARY.md](./PROJECT_SUMMARY.md)
-- Overview of all components
-- What's included ✅
-- What's roadmap 📋
-- Code statistics
+-- Overview of all components
+-- What's included
+-- What's roadmap
+-- Code statistics
 
 #### **Set it up and run it**
 → [GETTING_STARTED.md](./GETTING_STARTED.md)
@@ -68,8 +68,8 @@
 
 #### **See what features are available**
 → [FEATURES.md](./FEATURES.md)
-- Current features (✅)
-- Planned features (📋)
+-- Current features
+-- Planned features
 - Game modes
 - Statistics system
 - Accessibility
@@ -91,7 +91,7 @@
 
 ---
 
-## 🔧 Development Workflow
+## Development Workflow
 
 ### Start Development
 ```bash
@@ -123,7 +123,7 @@ npm run tauri-build        # Create installer
 
 ---
 
-## 📁 Directory Guide
+##  Directory Guide
 
 ### `src/` - React Frontend
 - **App.tsx** - Main game component (150 lines)
@@ -156,21 +156,21 @@ npm run tauri-build        # Create installer
 
 ---
 
-## 🎮 How to Play
+## How to Play
 
 1. **Start Game**: Click "New Game"
 2. **Type Guess**: Enter any 5-letter word
 3. **Submit**: Press Enter
 4. **Interpret Feedback**:
-   - 🟩 Green: Correct position
-   - 🟨 Yellow: Wrong position
-   - ⬜ Gray: Not in word
+   - Green: Correct position
+   - Yellow: Wrong position
+   - Gray: Not in word
 5. **Win**: All green in ≤6 attempts
 6. **Hints**: Click for suggestions (entropy-based)
 
 ---
 
-## 💻 Key Algorithms
+##  Key Algorithms
 
 ### 1. Guess Evaluation (Two-Pass)
 See: `src-tauri/src/engine.rs`
@@ -203,7 +203,7 @@ Minimizes expected remaining possibilities
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Unit Tests Included
 - **engine.rs** - 5 tests for guess evaluation
@@ -226,16 +226,16 @@ npm test (in project root for React tests - framework ready)
 
 ---
 
-## 🔐 Security & Privacy
+##  Security & Privacy
 
-✅ **Built In**:
+Built In:
 - No telemetry by default
 - No external API calls
 - All data local (SQLite)
 - Type-safe throughout
 - Deterministic (no randomness)
 
-🔒 **Optional** (future):
+**Optional** (future):
 - Encrypted backups
 - TLS for sync
 - Plugin sandboxing
@@ -243,7 +243,7 @@ npm test (in project root for React tests - framework ready)
 
 ---
 
-## 📈 Tech Stack Summary
+##  Tech Stack Summary
 
 | Layer | Technology | Purpose |
 |-------|-----------|---------|
@@ -259,7 +259,7 @@ npm test (in project root for React tests - framework ready)
 
 ---
 
-## 🚀 Next Steps
+## Next Steps
 
 ### To Learn
 1. Read [ARCHITECTURE.md](./ARCHITECTURE.md) (30 min)
@@ -283,7 +283,7 @@ npm test (in project root for React tests - framework ready)
 
 ---
 
-## 📞 Quick References
+##  Quick References
 
 ### Commands
 ```bash
@@ -317,7 +317,7 @@ cargo test            # Rust tests (in src-tauri/)
 
 ---
 
-## ✅ Completion Checklist
+## Completion Checklist
 
 Before deploying:
 
@@ -334,7 +334,7 @@ Before deploying:
 
 ---
 
-## 🎓 Learning Resources
+##  Learning Resources
 
 - **Tauri Docs**: https://tauri.app/
 - **React Docs**: https://react.dev/
@@ -344,21 +344,21 @@ Before deploying:
 
 ---
 
-## 🎯 Summary
+## Summary
 
 You have a **complete, production-ready Wordle game suite**:
 
-✅ Full stack (React + Rust)
-✅ Core algorithms implemented
-✅ Database persistence
-✅ Type-safe throughout
-✅ Tested (13+ tests)
-✅ Documented (2000+ lines)
-✅ CI/CD ready
-✅ Portfolio-quality code
+Full stack (React + Rust)
+Core algorithms implemented
+Database persistence
+Type-safe throughout
+Tested (13+ tests)
+Documented (2000+ lines)
+CI/CD ready
+Portfolio-quality code
 
-**Next step**: Run `npm install && npm run tauri-dev` 🚀
+**Next step**: Run `npm install && npm run tauri-dev`
 
 ---
 
-**Happy building!** 🎮
+**Happy building!**

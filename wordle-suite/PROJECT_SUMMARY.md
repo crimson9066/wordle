@@ -13,40 +13,40 @@ A Wordle game suite with multiple game modes and a solid feature set. Built with
 
 ---
 
-## 📦 What's Included
+##  What's Included
 
-### Core Game Engine ✅
+### Core Game Engine 
 - **`engine.rs`** (100 lines) - Main logic for evaluating guesses
 - Two-pass algorithm that handles duplicate letters correctly
 - Includes unit tests
 - Works for any 5-letter word comparison
 
-### Word Management ✅
+### Word Management 
 - **`word_list.rs`** (200 lines) - Stores 500+ words
 - Daily word selection based on SHA256
 - Fast word lookups using HashSet
 - Can be seeded for testing
 
-### Hint System ✅
+### Hint System 
 - **`hint_engine.rs`** (300 lines) - Suggests next guesses
 - Shows letter frequency and position info
 - Ranks suggestions by how much they reduce possibilities
 - Explains each suggestion
 
-### Data Persistence ✅
+### Data Persistence 
 - **`db.rs`** (400 lines) - SQLite database wrapper
 - 4 tables: Players, Games, Stats, EventLog
 - Automatic schema creation
 - Type-safe Rust structs that map to SQL
 - CRUD operations for all data
 
-### IPC Bridge ✅
+### IPC Bridge 
 - **`commands.rs`** (200 lines) - Tauri command handlers
 - Connects React frontend to Rust backend
 - Uses JSON for communication
 - Error handling and validation
 
-### React UI ✅
+### React UI 
 - **`App.tsx`** (200 lines) - Main game component
 - Game board with 6 rows × 5 columns
 - Input handling (keyboard + submit button)
@@ -54,25 +54,25 @@ A Wordle game suite with multiple game modes and a solid feature set. Built with
 - Theme toggle (light/dark mode)
 - Responsive design for mobile and desktop
 
-### State Management ✅
+### State Management 
 - **`appStore.ts`** - Zustand store for global state
 - Player, game, and stats state
 - Theme persistence
 - Modal/dialog state
 
-### API Client ✅
+### API Client 
 - **`gameApi.ts`** - Type-safe Tauri IPC wrapper
 - Clean async/await interface
 - Error handling utility
 - Matches Rust command signatures
 
-### TypeScript Types ✅
+### TypeScript Types 
 - **`types/index.ts`** - Complete type definitions
 - Matches Rust struct serialization
 - Enum for letter feedback
 - Interface for all data models
 
-### Styling ✅
+### Styling 
 - **`index.css`** - CSS Grid layout, animations
 - CSS variables for easy theming
 - Dark mode support
@@ -80,7 +80,7 @@ A Wordle game suite with multiple game modes and a solid feature set. Built with
 - Responsive breakpoints
 - WCAG compliant colors
 
-### Configuration ✅
+### Configuration 
 - **`Cargo.toml`** - Workspace with dependencies
 - **`package.json`** - NPM scripts and dev dependencies
 - **`tsconfig.json`** - TypeScript configuration
@@ -88,14 +88,14 @@ A Wordle game suite with multiple game modes and a solid feature set. Built with
 - **`tauri.conf.json`** - Tauri app configuration
 - **`.vscode/`** - Debug and tasks configuration
 
-### Documentation ✅
+### Documentation 
 - **`README.md`** (500+ lines) - Complete project guide
 - **`ARCHITECTURE.md`** (600+ lines) - Technical deep dive
 - **`FEATURES.md`** (400+ lines) - Feature specification
 - **`GETTING_STARTED.md`** (300+ lines) - Setup guide
 - **`.github/copilot-instructions.md`** - Development guide
 
-### CI/CD ✅
+### CI/CD 
 - **`.github/workflows/ci-cd.yml`** - GitHub Actions
   - Matrix builds for Windows/Linux/macOS
   - Linting (ESLint + Clippy)
@@ -104,7 +104,7 @@ A Wordle game suite with multiple game modes and a solid feature set. Built with
   - Security audits (cargo audit + npm audit)
   - Artifact generation and upload
 
-### Utilities ✅
+### Utilities 
 - **`scripts/dev.sh`** / **`scripts/dev.bat`** - Quick commands
 - **`.gitignore`** - Proper exclusions
 - **`.vscode/launch.json`** - Debug configuration
@@ -112,7 +112,7 @@ A Wordle game suite with multiple game modes and a solid feature set. Built with
 
 ---
 
-## 🏗️ Architecture Highlights
+##  Architecture Highlights
 
 ### Separation of Concerns
 ```
@@ -124,10 +124,10 @@ SQLite (Persistence)
 ```
 
 Each layer is:
-- ✅ Independently testable
-- ✅ Independently deployable
-- ✅ Focused on one responsibility
-- ✅ Loosely coupled to others
+-  Independently testable
+-  Independently deployable
+-  Focused on one responsibility
+-  Loosely coupled to others
 
 ### Pure Functions
 - `evaluate_guess()` - No side effects, deterministic
@@ -148,15 +148,15 @@ Each layer is:
 - Database: Indexed for fast lookups
 
 ### Security & Privacy
-- ✅ No telemetry by default
-- ✅ No external API calls
-- ✅ All data stored locally
-- ✅ Deterministic (reproducible results)
-- ✅ Sandboxing ready (for future plugins)
+-  No telemetry by default
+-  No external API calls
+-  All data stored locally
+-  Deterministic (reproducible results)
+-  Sandboxing ready (for future plugins)
 
 ---
 
-## 📊 Code Statistics
+##  Code Statistics
 
 | Component | Lines | Tests | Purpose |
 |-----------|-------|-------|---------|
@@ -176,7 +176,7 @@ Each layer is:
 
 ---
 
-## 🚀 Getting Started (Next 5 Minutes)
+##  Getting Started (Next 5 Minutes)
 
 ```bash
 # Navigate to project
@@ -198,29 +198,29 @@ The app will launch with:
 
 ---
 
-## 📚 Documentation Guide
+##  Documentation Guide
 
 Start here based on your interest:
 
-### 👨‍💻 If you want to **develop features**:
+###  If you want to **develop features**:
 1. Read: [GETTING_STARTED.md](./GETTING_STARTED.md) (10 min)
 2. Read: [ARCHITECTURE.md](./ARCHITECTURE.md) sections 1-3 (15 min)
 3. Explore: `src-tauri/src/engine.rs` (5 min)
 4. Start: Add your feature following the pattern
 
-### 🏗️ If you want to **understand the design**:
+###  If you want to **understand the design**:
 1. Read: [README.md](./README.md) overview (10 min)
 2. Read: [ARCHITECTURE.md](./ARCHITECTURE.md) (30 min)
 3. Explore: Project structure in VS Code
 4. Review: Key files (listed above)
 
-### 🎮 If you want to **see the features**:
+###  If you want to **see the features**:
 1. Read: [FEATURES.md](./FEATURES.md) (15 min)
 2. Launch: `npm run tauri-dev`
 3. Play: Try different modes and features
 4. Note: Some features are roadmap items
 
-### 🐛 If you hit **an issue**:
+###  If you hit **an issue**:
 1. Check: [GETTING_STARTED.md](./GETTING_STARTED.md#troubleshooting)
 2. Check: `.github/copilot-instructions.md`
 3. Verify: Prerequisites are installed
@@ -228,7 +228,7 @@ Start here based on your interest:
 
 ---
 
-## ✨ Standout Features
+##  Standout Features
 
 ### Correct Guess Evaluation
 - Handles duplicate letters correctly
@@ -270,7 +270,7 @@ Start here based on your interest:
 
 ---
 
-## 🎯 What Makes This Portfolio-Worthy
+##  What Makes This Portfolio-Worthy
 
 ### 1. **Full Stack**
 - Desktop app (Tauri)
@@ -309,7 +309,7 @@ Start here based on your interest:
 
 ---
 
-## 🔧 Next Steps to Customize
+##  Next Steps to Customize
 
 ### Add a Feature
 1. Choose from [FEATURES.md](./FEATURES.md) roadmap
@@ -341,7 +341,7 @@ Start here based on your interest:
 
 ---
 
-## 📈 Complexity & Learning Curve
+##  Complexity & Learning Curve
 
 | Topic | Difficulty | Time to Learn |
 |-------|-----------|---------------|
@@ -356,7 +356,7 @@ Start here based on your interest:
 
 ---
 
-## ✅ Verification Checklist
+##  Verification Checklist
 
 Before considering this done, verify:
 
@@ -375,7 +375,7 @@ Before considering this done, verify:
 
 ---
 
-## 🎓 Learning Outcomes
+##  Learning Outcomes
 
 By working with this codebase, you'll learn:
 
@@ -411,7 +411,7 @@ By working with this codebase, you'll learn:
 
 ---
 
-## 📞 Support & Resources
+## Support & Resources
 
 - **Tauri Docs**: https://tauri.app/
 - **React Docs**: https://react.dev/
@@ -421,20 +421,20 @@ By working with this codebase, you'll learn:
 
 ---
 
-## 🎉 Summary
+##  Summary
 
 You now have a **complete, working Wordle game suite** that is:
 
-✅ **Functional** - Plays Wordle correctly
-✅ **Modular** - Clean separation of concerns
-✅ **Testable** - Unit tests included
-✅ **Documented** - Comprehensive guides
-✅ **Deployable** - CI/CD pipeline included
-✅ **Extensible** - Ready for new features
-✅ **Professional** - Portfolio-ready code quality
+ **Functional** - Plays Wordle correctly
+ **Modular** - Clean separation of concerns
+ **Testable** - Unit tests included
+ **Documented** - Comprehensive guides
+ **Deployable** - CI/CD pipeline included
+ **Extensible** - Ready for new features
+ **Professional** - Portfolio-ready code quality
 
 **Next step**: Run `npm install` and `npm run tauri-dev` to see it in action!
 
 ---
 
-**Built with passion for good software architecture.** 🚀
+**Built with passion for good software architecture.**
