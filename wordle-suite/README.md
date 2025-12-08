@@ -1,6 +1,6 @@
 # Wordle Suite
 
-A comprehensive, modular Wordle game suite built with Tauri (Rust backend), React (TypeScript frontend), and SQLite persistence. This is a production-ready implementation with advanced features, multiple game modes, and a plugin system.
+Wordle game suite built with Tauri (Rust backend), React (TypeScript frontend), and SQLite. Includes multiple game modes and a solid feature set.
 
 ## Features
 
@@ -10,11 +10,11 @@ A comprehensive, modular Wordle game suite built with Tauri (Rust backend), Reac
 - Support for multiple game modes (Classic, Timed, Hard, Cipher, etc.)
 - Comprehensive word list validation with O(1) lookup
 
-### Advanced Hints and Solver
-- Entropy-based hint engine using information-gain calculation
-- Suggests optimal next guesses with explanation
-- Educational solver mode: step-through how Wordle reduces possibilities
-- Letter frequency analysis and position statistics
+### Hint System and Solver
+- Hint engine that suggests next guesses
+- Shows letter frequency and position stats
+- Can walk through the solving process step-by-step
+- Hints are based on reducing remaining possibilities
 
 ### Player Features
 - Player profiles with customizable settings
@@ -30,18 +30,15 @@ A comprehensive, modular Wordle game suite built with Tauri (Rust backend), Reac
 - Encrypted backup support (opt-in)
 
 ### User Experience
-- Smooth tile flip animations
-- Particle confetti on victory
-- Native notifications
+- Tile animations on feedback
+- Notification on win
 - System tray integration
-- Responsive design for all screen sizes
+- Works on different screen sizes
 
 ### Security and Privacy
-- No telemetry by default
-- Opt-in features only
-- All online features encrypted (TLS)
-- Data export on demand
-- Word pack integrity checks
+- No data collection by default
+- All data stays local
+- Can export your data
 
 ## Architecture
 
@@ -306,7 +303,7 @@ Response: HintAnalysis {
 }
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Unit Tests
 
@@ -361,12 +358,12 @@ Store signing certificates in GitHub Actions secrets:
 ## Roadmap
 
 ### Phase 1 (Current)
-- ✅ Core engine & evaluation
-- ✅ Daily word selection
-- ✅ Basic UI with React
-- ✅ SQLite persistence
-- ✅ Hint engine
-- 🔄 Basic theming
+- Core engine & evaluation
+- Daily word selection
+- Basic UI with React
+- SQLite persistence
+- Hint engine
+- Basic theming
 
 ### Phase 2
 - [ ] Plugin loader system (modes as plugins)
@@ -388,7 +385,7 @@ Store signing certificates in GitHub Actions secrets:
 - [ ] Custom packs submission & review
 - [ ] Analytics dashboard (opt-in)
 
-## 📝 License
+## License
 
 MIT OR Apache-2.0 (dual licensed)
 
@@ -400,11 +397,11 @@ Contributions welcome! Please:
 3. Write tests for new features
 4. Submit a pull request
 
-## 📮 Support
+##  Support
 
-- 📖 [Tauri Docs](https://tauri.app/)
-- 📖 [React Docs](https://react.dev/)
-- 📖 [Rust Book](https://doc.rust-lang.org/book/)
+-  [Tauri Docs](https://tauri.app/)
+-  [React Docs](https://react.dev/)
+-  [Rust Book](https://doc.rust-lang.org/book/)
 
 ---
 

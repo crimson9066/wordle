@@ -1,50 +1,49 @@
-# Project Summary: Wordle Suite - Complete Implementation
+# Project Summary: Wordle Suite
 
-## 🎯 What You've Built
+## What You've Built
 
-A **production-ready, modular Wordle game suite** with advanced features, comprehensive testing infrastructure, and excellent code organization. This is a portfolio-quality project that demonstrates modern software architecture.
+A Wordle game suite with multiple game modes and a solid feature set. Built with React (TypeScript frontend), Rust (Tauri backend), and SQLite for data storage.
 
 ### Stack
 - **Frontend**: React 18 + TypeScript + Vite
 - **Backend**: Rust + Tauri (native desktop app)
 - **Database**: SQLite with migrations
-- **State**: Zustand (lightweight, type-safe)
-- **Build**: Cargo + npm with integrated workflows
+- **State**: Zustand for React state management
+- **Build**: Cargo + npm
 
 ---
 
 ## 📦 What's Included
 
 ### Core Game Engine ✅
-- **`engine.rs`** (100 lines) - Pure function for guess evaluation
-- Two-pass algorithm handling duplicate letters correctly
-- Comprehensive unit tests included
-- Works for any word pair, not just Wordle
+- **`engine.rs`** (100 lines) - Main logic for evaluating guesses
+- Two-pass algorithm that handles duplicate letters correctly
+- Includes unit tests
+- Works for any 5-letter word comparison
 
 ### Word Management ✅
-- **`word_list.rs`** (200 lines) - 500+ word dictionary
-- Deterministic daily word selection (SHA256-based)
-- O(1) word validation via HashSet
-- Reproducible scheduling with configurable seed
+- **`word_list.rs`** (200 lines) - Stores 500+ words
+- Daily word selection based on SHA256
+- Fast word lookups using HashSet
+- Can be seeded for testing
 
-### Advanced Solver ✅
-- **`hint_engine.rs`** (300 lines) - Entropy-based hint generation
-- Information-gain calculation for optimal suggestions
-- Top 5 suggestions ranked by expected information reduction
-- Letter frequency analysis and position statistics
-- Educational explanations for each hint
+### Hint System ✅
+- **`hint_engine.rs`** (300 lines) - Suggests next guesses
+- Shows letter frequency and position info
+- Ranks suggestions by how much they reduce possibilities
+- Explains each suggestion
 
 ### Data Persistence ✅
-- **`db.rs`** (400 lines) - SQLite with ORM-like wrapper
+- **`db.rs`** (400 lines) - SQLite database wrapper
 - 4 tables: Players, Games, Stats, EventLog
-- Automatic schema migrations
-- Type-safe Rust structs mapping to SQL
-- CRUD operations for all entities
+- Automatic schema creation
+- Type-safe Rust structs that map to SQL
+- CRUD operations for all data
 
 ### IPC Bridge ✅
-- **`commands.rs`** (200 lines) - Type-safe command handlers
-- Seamless Rust ↔ React communication via Tauri
-- Serialization with serde
+- **`commands.rs`** (200 lines) - Tauri command handlers
+- Connects React frontend to Rust backend
+- Uses JSON for communication
 - Error handling and validation
 
 ### React UI ✅

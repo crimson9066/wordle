@@ -1,5 +1,5 @@
-// SQLite persistence layer with schema migrations
-// Handles game states, player profiles, and statistics
+// SQLite persistence layer 
+// Handles storing game states, player profiles, and player statistics
 
 use chrono::{DateTime, Utc};
 use rusqlite::{params, Connection, Result as SqlResult, OptionalExtension};
@@ -35,8 +35,8 @@ pub struct GameState {
     pub game_mode: String,
     pub word_id: String,
     pub guesses: Vec<String>,
-    pub feedback: Vec<Vec<i32>>, // Serialized LetterFeedback as [0=Absent, 1=Present, 2=Correct]
-    pub result: String, // "won", "lost", "in_progress"
+    pub feedback: Vec<Vec<i32>>, // Feedback stored as numbers: 0=Absent, 1=Present, 2=Correct
+    pub result: String, // "won", "lost", or "in_progress"
     pub started_at: String,
     pub finished_at: Option<String>,
 }
@@ -49,7 +49,7 @@ pub struct GameStats {
     pub current_streak: i32,
     pub best_streak: i32,
     pub avg_guesses: f64,
-    pub guess_distribution: [i32; 6], // 1-6 guesses
+    pub guess_distribution: [i32; 6], // Tracks wins by number of guesses (1-6)
     pub last_game_date: Option<String>,
 }
 
@@ -58,7 +58,8 @@ pub struct Database {
 }
 
 impl Database {
-    /// Open or create database at the given path
+    /// Open or create a database at the given file path
+    /// Creates the schema tables if they don't exist yet
     pub fn open<P: AsRef<Path>>(path: P) -> DbResult<Self> {
         let conn = Connection::open(path)?;
         let db = Self { conn };
@@ -66,9 +67,10 @@ impl Database {
         Ok(db)
     }
 
-    /// Run schema migrations
+    /// Create all the necessary tables if they don't exist
+    /// Called when database is first opened
     fn run_migrations(&self) -> DbResult<()> {
-        // Create players table
+        // Store player profiles - their name, settings, etc
         self.conn.execute(
             "CREATE TABLE IF NOT EXISTS players (
                 id TEXT PRIMARY KEY,
@@ -80,7 +82,7 @@ impl Database {
             [],
         )?;
 
-        // Create game_states table
+        // Store individual game records - every game they played
         self.conn.execute(
             "CREATE TABLE IF NOT EXISTS game_states (
                 id TEXT PRIMARY KEY,
@@ -97,7 +99,7 @@ impl Database {
             [],
         )?;
 
-        // Create stats table
+        // Store aggregate stats - wins, streaks, averages
         self.conn.execute(
             "CREATE TABLE IF NOT EXISTS game_stats (
                 player_id TEXT PRIMARY KEY,
@@ -113,7 +115,7 @@ impl Database {
             [],
         )?;
 
-        // Create event log for analytics
+        // Event log for tracking what happened during games (optional analytics)
         self.conn.execute(
             "CREATE TABLE IF NOT EXISTS event_log (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,

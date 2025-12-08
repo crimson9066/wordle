@@ -1,4 +1,5 @@
 // Main Tauri application entry point
+// This is where the desktop app gets set up and started
 
 mod engine;
 mod word_list;
@@ -15,7 +16,9 @@ use db::Database;
 use word_list::DailyWordConfig;
 use commands::*;
 
-// Global state holders
+// Shared state that persists across all IPC calls
+// db stores the database connection
+// daily_word_config handles the word list
 pub struct AppState {
     pub db: Mutex<Option<Database>>,
     pub daily_word_config: DailyWordConfig,
@@ -23,6 +26,7 @@ pub struct AppState {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // Set up the system tray menu (the icon in taskbar when minimized)
     let system_tray_menu = SystemTrayMenu::new()
         .add_item(SystemTrayMenuItem::new("Show", "show".to_string()))
         .add_item(SystemTrayMenuItem::Separator)
@@ -32,10 +36,12 @@ pub fn run() {
         .plugin(tauri_plugin_opener::init())
         .system_tray(SystemTray::new().with_menu(system_tray_menu))
         .on_system_tray_event(handle_system_tray_event)
+        // Manage the shared app state so all commands can access it
         .manage(AppState {
             db: Mutex::new(None),
             daily_word_config: DailyWordConfig::new(),
         })
+        // Register all the IPC commands that the frontend can call
         .invoke_handler(tauri::generate_handler![
             eval_guess_cmd,
             get_daily_word_cmd,
@@ -56,8 +62,10 @@ pub fn run() {
 }
 
 fn handle_system_tray_event(app: &tauri::AppHandle, event: tauri::SystemTrayEvent) {
+    // Handle clicking on the tray icon or tray menu items
     match event {
         tauri::SystemTrayEvent::LeftClick { .. } => {
+            // Show the window when clicking the tray icon
             if let Ok(window) = app.get_webview_window("main") {
                 let _ = window.show();
                 let _ = window.set_focus();
@@ -65,19 +73,23 @@ fn handle_system_tray_event(app: &tauri::AppHandle, event: tauri::SystemTrayEven
         }
         tauri::SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
             "show" => {
+                // Show menu item was clicked
                 if let Ok(window) = app.get_webview_window("main") {
                     let _ = window.show();
                     let _ = window.set_focus();
                 }
             }
-            "quit" => std::process::exit(0),
+            "quit" => {
+                // User clicked Quit - exit the app
+                std::process::exit(0);
+            }
             _ => {}
         },
         _ => {}
     }
 }
 
-// IPC Commands
+// IPC command wrappers - these get called from React via Tauri's invoke system
 
 #[tauri::command]
 fn eval_guess_cmd(request: commands::EvaluateGuessRequest) -> Result<serde_json::Value, String> {

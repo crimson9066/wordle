@@ -1,5 +1,5 @@
 // Core game engine module
-// Pure functions for Wordle logic evaluation
+// This has all the pure logic for evaluating guesses and getting feedback
 
 use std::collections::HashMap;
 
@@ -24,22 +24,25 @@ pub struct GuessEvaluation {
 
 /// Evaluates a guess against the answer using a two-pass algorithm
 /// 
-/// # Algorithm
+/// This function handles duplicate letters correctly by first marking
+/// all exact matches (green), then marking present letters (yellow)
+/// while tracking how many of each letter are available
+///
 /// Pass 1: Mark all correct positions (greens)
-/// Pass 2: Mark present letters (yellows), decrementing available counts
+/// Pass 2: Mark present letters (yellows), keeping track of letter counts
 ///
-/// # Arguments
-/// * `guess` - The guessed word (must be valid 5-letter word)
-/// * `answer` - The actual answer (must be valid 5-letter word)
+/// Arguments:
+/// * `guess` - The guessed word (must be 5 letters)
+/// * `answer` - The actual answer (must be 5 letters)
 ///
-/// # Returns
+/// Returns:
 /// GuessEvaluation with feedback for each position
 ///
-/// # Example
+/// Example:
 /// ```
 /// let evaluation = evaluate_guess("SLATE", "STALE");
-/// assert_eq!(evaluation.feedback[0], LetterFeedback::Correct);
-/// assert_eq!(evaluation.feedback[2], LetterFeedback::Present);
+/// assert_eq!(evaluation.feedback[0], LetterFeedback::Correct);  // S matches
+/// assert_eq!(evaluation.feedback[2], LetterFeedback::Present);  // A is present but wrong spot
 /// ```
 pub fn evaluate_guess(guess: &str, answer: &str) -> GuessEvaluation {
     let guess_upper = guess.to_uppercase();
@@ -51,24 +54,29 @@ pub fn evaluate_guess(guess: &str, answer: &str) -> GuessEvaluation {
     let mut feedback = vec![LetterFeedback::Absent; 5];
     let mut answer_letter_counts = HashMap::new();
     
-    // Count all letters in answer
+    // Count how many times each letter appears in the answer
+    // We need this to handle duplicates correctly
     for &ch in &answer_chars {
         *answer_letter_counts.entry(ch).or_insert(0) += 1;
     }
     
-    // Pass 1: Mark correct positions and decrement counts
+    // Pass 1: Mark correct positions (greens) and decrement counts
+    // We do this first so greens take priority over yellows
     for (i, &guess_char) in guess_chars.iter().enumerate() {
         if guess_char == answer_chars[i] {
             feedback[i] = LetterFeedback::Correct;
+            // Don't count this letter again for yellows
             if let Some(count) = answer_letter_counts.get_mut(&guess_char) {
                 *count -= 1;
             }
         }
     }
     
-    // Pass 2: Mark present letters (considering remaining counts)
+    // Pass 2: Mark present letters (yellows) using remaining counts
+    // This ensures we don't mark a letter yellow if all instances were already used as green
     for (i, &guess_char) in guess_chars.iter().enumerate() {
         if feedback[i] == LetterFeedback::Absent {
+            // Only mark as present if we have available instances of this letter
             if let Some(&count) = answer_letter_counts.get(&guess_char) {
                 if count > 0 {
                     feedback[i] = LetterFeedback::Present;
@@ -78,6 +86,7 @@ pub fn evaluate_guess(guess: &str, answer: &str) -> GuessEvaluation {
         }
     }
     
+    // Check if all letters are correct (win condition)
     let is_correct = feedback.iter().all(|&f| f == LetterFeedback::Correct);
     
     GuessEvaluation {

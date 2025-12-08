@@ -32,11 +32,17 @@ interface PlayerStats {
 }
 
 function App() {
+  // Track the current game state from the backend
   const [gameState, setGameState] = useState<GameState | null>(null);
+  // User's current input for the guess
   const [currentGuess, setCurrentGuess] = useState("");
+  // Store all the feedback from previous guesses
   const [feedback, setFeedback] = useState<number[][]>([]);
+  // Player stats (wins, streaks, etc)
   const [playerStats, setPlayerStats] = useState<PlayerStats | null>(null);
+  // Messages to show the user (errors, win/loss, etc)
   const [message, setMessage] = useState("");
+  // Track if user prefers dark mode or light mode
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
@@ -45,15 +51,15 @@ function App() {
 
   const initializeApp = async () => {
     try {
-      // Initialize database
+      // Set up the database first time the app loads
       await invoke("init_db_cmd");
 
-      // Create or get player (for demo, use a default player)
+      // Get or create a player profile - for now just use a default name
       const player = (await invoke("get_or_create_player_cmd", {
         playerName: "Default Player",
       })) as PlayerProfile;
 
-      // Create new game
+      // Start a new game for this player
       const game = (await invoke("new_game_cmd", {
         request: {
           player_id: player.id,
@@ -63,7 +69,7 @@ function App() {
 
       setGameState(game);
 
-      // Get player stats
+      // Grab the player's stats to show on the sidebar
       const stats = (await invoke("get_player_stats_cmd", {
         playerId: player.id,
       })) as PlayerStats;
@@ -81,11 +87,13 @@ function App() {
   };
 
   const submitGuess = async () => {
+    // Can't submit if the game is already won or lost
     if (!gameState || gameState.result !== "in_progress") {
       return;
     }
 
     try {
+      // Check if the word is in our word list
       const isValid = await invoke("validate_guess_cmd", {
         word: currentGuess,
       });
@@ -95,6 +103,7 @@ function App() {
         return;
       }
 
+      // Send the guess to the backend to get evaluated
       const result = await invoke("make_guess_cmd", {
         request: {
           game_id: gameState.id,
@@ -104,9 +113,12 @@ function App() {
 
       const [response, error] = result as [any, string | null];
 
+      // Add this guess's feedback to our list so we can show it on screen
       setFeedback([...feedback, response.feedback]);
+      // Clear the input field so user can type their next guess
       setCurrentGuess("");
 
+      // Show appropriate message based on the result
       if (error) {
         setMessage(error);
       } else if (response.is_correct) {
@@ -115,6 +127,7 @@ function App() {
         setMessage(`Game Over! Remaining guesses: ${response.remaining_guesses}`);
       }
 
+      // Grab the updated game state from the backend
       const updated = (await invoke("get_game_state", {
         gameId: gameState.id,
       })) as GameState;

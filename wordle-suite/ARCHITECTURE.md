@@ -1,8 +1,8 @@
-# Wordle Suite - Architecture Documentation
+# Wordle Suite - Architecture
 
 ## Overview
 
-Wordle Suite is a modular, production-ready Wordle implementation built with a clear separation of concerns:
+Simple three-layer architecture:
 
 ```
 React (UI)
@@ -12,42 +12,42 @@ Rust Backend (Game Logic)
 SQLite (Persistence)
 ```
 
-## High-Level Architecture
+## High-Level Layers
 
 ### 1. Presentation Layer (React + TypeScript)
 - **Framework**: React 18 with TypeScript
-- **State Management**: Zustand (lightweight, TypeScript-friendly)
-- **Build Tool**: Vite (fast HMR, optimized bundles)
-- **Communication**: Tauri IPC (type-safe, async)
+- **State Management**: Zustand for global state
+- **Build Tool**: Vite for fast development
+- **Communication**: Tauri IPC to call Rust functions
 
 **Key Components**:
-- `App.tsx` - Main game component with game board
-- `store/appStore.ts` - Global state (player, game, stats)
-- `api/gameApi.ts` - Tauri command wrappers
-- `types/index.ts` - Shared TypeScript interfaces
+- `App.tsx` - Main game board component
+- `store/appStore.ts` - Shared state management
+- `api/gameApi.ts` - Wrapper functions for Tauri commands
+- `types/index.ts` - TypeScript interfaces
 
 **Styling**:
-- CSS Grid for responsive layout
-- CSS variables for theming (light/dark)
-- Animations for tile flips and confetti
+- CSS Grid for layout
+- CSS variables for theming (light/dark modes)
+- Animations for tile feedback
 
 ### 2. Application Layer (Tauri IPC)
 - **Bridge**: `src-tauri/src/commands.rs` - Tauri command handlers
-- **Protocol**: Async Rust functions exposed to React via `#[tauri::command]`
-- **Serialization**: serde for JSON (de)serialization
-- **Type Safety**: Matching TypeScript interfaces with Rust structs
+- **How it works**: Rust functions decorated with `#[tauri::command]` that React can call
+- **Data Format**: JSON serialization via serde
+- **Type Safety**: TypeScript types match Rust structs
 
 **Key Handlers**:
-- Game management: `new_game_cmd`, `make_guess_cmd`
+- Game: `new_game_cmd`, `make_guess_cmd`
 - Validation: `validate_guess_cmd`
 - Hints: `get_hint_cmd`
 - Stats: `get_player_stats_cmd`
 
 ### 3. Business Logic Layer (Rust)
 
-#### `engine.rs` - Pure Game Logic
-- **`evaluate_guess(guess, answer)`** - Core evaluation algorithm
-- Two-pass evaluation (greens first, yellows second)
+#### `engine.rs` - Game Logic
+- **`evaluate_guess(guess, answer)`** - Main function to evaluate a guess
+- Two-pass evaluation (check correct positions first, then wrong positions)
 - Handles duplicate letters correctly
 - No side effects (pure function)
 - Heavily unit tested
