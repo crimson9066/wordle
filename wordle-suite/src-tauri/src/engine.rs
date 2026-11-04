@@ -119,9 +119,9 @@ mod tests {
         let eval = evaluate_guess("SLATE", "STALE");
         assert!(!eval.is_correct);
         assert_eq!(eval.feedback[0], LetterFeedback::Correct);  // S
-        assert_eq!(eval.feedback[1], LetterFeedback::Correct);  // T
-        assert_eq!(eval.feedback[2], LetterFeedback::Present);  // A (wrong position)
-        assert_eq!(eval.feedback[3], LetterFeedback::Correct);  // L
+        assert_eq!(eval.feedback[1], LetterFeedback::Present);  // L
+        assert_eq!(eval.feedback[2], LetterFeedback::Correct);  // A
+        assert_eq!(eval.feedback[3], LetterFeedback::Present);  // T
         assert_eq!(eval.feedback[4], LetterFeedback::Correct);  // E
     }
     
@@ -129,10 +129,10 @@ mod tests {
     fn test_duplicate_letter_handling() {
         // Answer has 1 L, guess has 2 L's - only first should be correct, second absent
         let eval = evaluate_guess("LLAMA", "STALE");
-        assert_eq!(eval.feedback[0], LetterFeedback::Absent);   // L (no L at position 0)
+        assert_eq!(eval.feedback[0], LetterFeedback::Present);  // L
         assert_eq!(eval.feedback[1], LetterFeedback::Absent);   // L (only 1 L in answer)
-        assert_eq!(eval.feedback[2], LetterFeedback::Present);  // A
-        assert_eq!(eval.feedback[3], LetterFeedback::Correct);  // L
+        assert_eq!(eval.feedback[2], LetterFeedback::Correct);  // A
+        assert_eq!(eval.feedback[3], LetterFeedback::Absent);   // M
         assert_eq!(eval.feedback[4], LetterFeedback::Absent);   // A (already used)
     }
     

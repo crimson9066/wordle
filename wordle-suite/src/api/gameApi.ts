@@ -53,10 +53,11 @@ export const gameApi = {
    */
   async makeGuess(
     gameId: string,
+    playerId: string,
     guess: string
   ): Promise<[any, string | null]> {
     return invoke("make_guess_cmd", {
-      request: { game_id: gameId, guess },
+      request: { game_id: gameId, player_id: playerId, guess },
     });
   },
 
@@ -65,10 +66,11 @@ export const gameApi = {
    */
   async getHint(
     gameId: string,
+    playerId: string,
     remainingWords: string[]
   ): Promise<HintAnalysis> {
     return invoke("get_hint_cmd", {
-      request: { game_id: gameId, remaining_words: remainingWords },
+      request: { game_id: gameId, player_id: playerId, remaining_words: remainingWords },
     });
   },
 

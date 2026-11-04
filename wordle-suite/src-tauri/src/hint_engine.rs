@@ -1,8 +1,8 @@
 // Entropy-based hint engine for suggesting optimal guesses
 // Information-gain calculation for Wordle solver
 
-use std::collections::HashMap;
 use crate::engine::{evaluate_guess, LetterFeedback};
+use std::collections::HashMap;
 
 /// Result of analyzing hints for a game state
 #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
@@ -61,7 +61,6 @@ fn compute_entropy(distribution: &HashMap<String, usize>) -> f64 {
 }
 
 pub struct HintEngine {
-    word_list: Vec<String>,
     candidate_set: Vec<String>, // Smaller set for fast evaluation
 }
 
@@ -69,17 +68,14 @@ impl HintEngine {
     pub fn new(word_list: Vec<String>) -> Self {
         // Use top 1000 most common words as candidates for efficiency
         let candidate_set = word_list.iter().take(1000).cloned().collect();
-        Self {
-            word_list,
-            candidate_set,
-        }
+        Self { candidate_set }
     }
 
     /// Analyze the current game state and provide hints
     pub fn analyze(
         &self,
         remaining_words: &[String],
-        previous_guesses: &[(String, Vec<LetterFeedback>)],
+        _previous_guesses: &[(String, Vec<LetterFeedback>)],
     ) -> HintAnalysis {
         if remaining_words.is_empty() {
             return HintAnalysis {
@@ -92,10 +88,7 @@ impl HintEngine {
         // Calculate entropy of current state
         let mut partitions = HashMap::new();
         for word in remaining_words {
-            partitions
-                .entry(word.clone())
-                .or_insert(0 as usize)
-                += 1;
+            *partitions.entry(word.clone()).or_insert(0) += 1;
         }
 
         let current_entropy = compute_entropy(&partitions);
@@ -155,12 +148,10 @@ impl HintEngine {
 
         for word in words {
             for (pos, ch) in word.to_uppercase().chars().enumerate() {
-                let freq = analysis
-                    .entry(ch)
-                    .or_insert_with(|| LetterFrequency {
-                        occurrences_in_remaining: 0,
-                        position_frequencies: [0; 5],
-                    });
+                let freq = analysis.entry(ch).or_insert_with(|| LetterFrequency {
+                    occurrences_in_remaining: 0,
+                    position_frequencies: [0; 5],
+                });
 
                 if freq.occurrences_in_remaining == 0 {
                     freq.occurrences_in_remaining = 1;

@@ -285,7 +285,7 @@ fn make_guess_cmd(request: GuessRequest, ...) -> Result<..., String>
 - `AppState` struct - Global state holder
 - `run()` function - Main app initialization
 - IPC command handlers (thin wrappers)
-- System tray event handler
+- Native desktop window lifecycle
 
 **State Management**:
 ```rust
@@ -303,7 +303,7 @@ pub struct AppState {
 **System Tray**:
 - Show/Hide window
 - Quit application
-- Menu items in system tray
+- Desktop window controls
 
 **Command Registration**:
 All commands listed with `#[tauri::command]` macro

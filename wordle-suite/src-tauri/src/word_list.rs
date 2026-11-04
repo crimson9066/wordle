@@ -87,7 +87,11 @@ lazy_static! {
         "ONION", "ONSET", "OOZED", "OPALS", "OPENS", "OPERA", "OPINE", "OPIUM",
         "OPTED", "ORGAN", "OTHER", "OTTER", "OUGHT", "OUNCE", "OUSTS", "OUTDO",
         "OUTED", "OVERT", "OVOID", "OWING", "OWNED", "OWNER", "OXIDE", "OZONE",
-    ];
+        "STALE",
+    ]
+    .into_iter()
+    .map(str::to_string)
+    .collect();
 }
 
 impl DailyWordConfig {

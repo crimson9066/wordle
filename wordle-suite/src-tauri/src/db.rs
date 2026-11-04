@@ -1,8 +1,8 @@
-// SQLite persistence layer 
+// SQLite persistence layer
 // Handles storing game states, player profiles, and player statistics
 
-use chrono::{DateTime, Utc};
-use rusqlite::{params, Connection, Result as SqlResult, OptionalExtension};
+use chrono::Utc;
+use rusqlite::{params, Connection, OptionalExtension};
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 use thiserror::Error;
@@ -36,7 +36,7 @@ pub struct GameState {
     pub word_id: String,
     pub guesses: Vec<String>,
     pub feedback: Vec<Vec<i32>>, // Feedback stored as numbers: 0=Absent, 1=Present, 2=Correct
-    pub result: String, // "won", "lost", or "in_progress"
+    pub result: String,          // "won", "lost", or "in_progress"
     pub started_at: String,
     pub finished_at: Option<String>,
 }
@@ -329,7 +329,12 @@ impl Database {
     }
 
     /// Log an event for analytics
-    pub fn log_event(&self, player_id: &str, event_type: &str, event_data: &serde_json::Value) -> DbResult<()> {
+    pub fn log_event(
+        &self,
+        player_id: &str,
+        event_type: &str,
+        event_data: &serde_json::Value,
+    ) -> DbResult<()> {
         self.conn.execute(
             "INSERT INTO event_log (player_id, event_type, event_data, timestamp)
              VALUES (?, ?, ?, ?)",
@@ -353,7 +358,7 @@ mod tests {
     fn test_database_creation() {
         let path = "test_wordle.db";
         let _ = fs::remove_file(path);
-        
+
         let db = Database::open(path).unwrap();
         let profile = PlayerProfile {
             id: "test-player".to_string(),
@@ -365,10 +370,10 @@ mod tests {
 
         db.create_player(&profile).unwrap();
         let retrieved = db.get_player("test-player").unwrap();
-        
+
         assert!(retrieved.is_some());
         assert_eq!(retrieved.unwrap().display_name, "Test Player");
-        
+
         let _ = fs::remove_file(path);
     }
 
@@ -376,8 +381,16 @@ mod tests {
     fn test_game_stats() {
         let path = "test_stats.db";
         let _ = fs::remove_file(path);
-        
+
         let db = Database::open(path).unwrap();
+        let profile = PlayerProfile {
+            id: "player1".to_string(),
+            display_name: "Test Player".to_string(),
+            created_at: Utc::now().to_rfc3339(),
+            settings: serde_json::json!({}),
+            installs_seed: "seed123".to_string(),
+        };
+        db.create_player(&profile).unwrap();
         let stats = db.get_or_create_stats("player1").unwrap();
         assert_eq!(stats.total_games, 0);
 
@@ -385,7 +398,7 @@ mod tests {
         let stats = db.get_stats("player1").unwrap().unwrap();
         assert_eq!(stats.total_games, 1);
         assert_eq!(stats.total_wins, 1);
-        
+
         let _ = fs::remove_file(path);
     }
 }

@@ -79,7 +79,7 @@ A production-ready, modular Wordle game suite built with Tauri (Rust backend), R
 
 **main.rs** (150 lines)
 - App entry point and state management
-- System tray integration
+- Native desktop window integration
 
 ### Frontend Components
 

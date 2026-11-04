@@ -1,20 +1,17 @@
 // Main Tauri application entry point
 // This is where the desktop app gets set up and started
 
-mod engine;
-mod word_list;
-mod db;
-mod hint_engine;
 mod commands;
+mod db;
+mod engine;
+mod hint_engine;
+mod word_list;
 
-use tauri::{
-    Config, Manager, SystemTray, SystemTrayMenu, SystemTrayMenuItem, Window,
-};
 use std::sync::Mutex;
+use tauri::Manager;
 
 use db::Database;
 use word_list::DailyWordConfig;
-use commands::*;
 
 // Shared state that persists across all IPC calls
 // db stores the database connection
@@ -26,16 +23,8 @@ pub struct AppState {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    // Set up the system tray menu (the icon in taskbar when minimized)
-    let system_tray_menu = SystemTrayMenu::new()
-        .add_item(SystemTrayMenuItem::new("Show", "show".to_string()))
-        .add_item(SystemTrayMenuItem::Separator)
-        .add_item(SystemTrayMenuItem::new("Quit", "quit".to_string()));
-
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
-        .system_tray(SystemTray::new().with_menu(system_tray_menu))
-        .on_system_tray_event(handle_system_tray_event)
         // Manage the shared app state so all commands can access it
         .manage(AppState {
             db: Mutex::new(None),
@@ -61,32 +50,8 @@ pub fn run() {
         });
 }
 
-fn handle_system_tray_event(app: &tauri::AppHandle, event: tauri::SystemTrayEvent) {
-    // Handle clicking on the tray icon or tray menu items
-    match event {
-        tauri::SystemTrayEvent::LeftClick { .. } => {
-            // Show the window when clicking the tray icon
-            if let Ok(window) = app.get_webview_window("main") {
-                let _ = window.show();
-                let _ = window.set_focus();
-            }
-        }
-        tauri::SystemTrayEvent::MenuItemClick { id, .. } => match id.as_str() {
-            "show" => {
-                // Show menu item was clicked
-                if let Ok(window) = app.get_webview_window("main") {
-                    let _ = window.show();
-                    let _ = window.set_focus();
-                }
-            }
-            "quit" => {
-                // User clicked Quit - exit the app
-                std::process::exit(0);
-            }
-            _ => {}
-        },
-        _ => {}
-    }
+fn main() {
+    run();
 }
 
 // IPC command wrappers - these get called from React via Tauri's invoke system
@@ -105,10 +70,7 @@ fn get_daily_word_cmd(
 }
 
 #[tauri::command]
-fn validate_guess_cmd(
-    word: String,
-    state: tauri::State<AppState>,
-) -> Result<bool, String> {
+fn validate_guess_cmd(word: String, state: tauri::State<AppState>) -> Result<bool, String> {
     commands::cmd_validate_guess(word, &state.daily_word_config)
 }
 
@@ -117,10 +79,11 @@ fn new_game_cmd(
     request: commands::NewGameRequest,
     state: tauri::State<AppState>,
 ) -> Result<db::GameState, String> {
-    let db = state
+    let db_guard = state
         .db
         .lock()
-        .unwrap()
+        .map_err(|_| "Database state unavailable".to_string())?;
+    let db = db_guard
         .as_ref()
         .ok_or_else(|| "Database not initialized".to_string())?;
 
@@ -132,14 +95,15 @@ fn make_guess_cmd(
     request: commands::GuessRequest,
     state: tauri::State<AppState>,
 ) -> Result<(serde_json::Value, Option<String>), String> {
-    let db = state
+    let db_guard = state
         .db
         .lock()
-        .unwrap()
+        .map_err(|_| "Database state unavailable".to_string())?;
+    let db = db_guard
         .as_ref()
         .ok_or_else(|| "Database not initialized".to_string())?;
 
-    commands::cmd_make_guess(request, db)
+    commands::cmd_make_guess(request, db, &state.daily_word_config)
 }
 
 #[tauri::command]
@@ -148,7 +112,14 @@ fn get_hint_cmd(
     state: tauri::State<AppState>,
 ) -> Result<hint_engine::HintAnalysis, String> {
     let word_list = &state.daily_word_config.word_list;
-    commands::cmd_get_hint(request, word_list)
+    let db_guard = state
+        .db
+        .lock()
+        .map_err(|_| "Database state unavailable".to_string())?;
+    let db = db_guard
+        .as_ref()
+        .ok_or_else(|| "Database not initialized".to_string())?;
+    commands::cmd_get_hint(request, word_list, db)
 }
 
 #[tauri::command]
@@ -156,10 +127,11 @@ fn get_or_create_player_cmd(
     player_name: String,
     state: tauri::State<AppState>,
 ) -> Result<db::PlayerProfile, String> {
-    let db = state
+    let db_guard = state
         .db
         .lock()
-        .unwrap()
+        .map_err(|_| "Database state unavailable".to_string())?;
+    let db = db_guard
         .as_ref()
         .ok_or_else(|| "Database not initialized".to_string())?;
 
@@ -171,10 +143,11 @@ fn get_player_stats_cmd(
     player_id: String,
     state: tauri::State<AppState>,
 ) -> Result<db::GameStats, String> {
-    let db = state
+    let db_guard = state
         .db
         .lock()
-        .unwrap()
+        .map_err(|_| "Database state unavailable".to_string())?;
+    let db = db_guard
         .as_ref()
         .ok_or_else(|| "Database not initialized".to_string())?;
 
@@ -184,7 +157,7 @@ fn get_player_stats_cmd(
 #[tauri::command]
 fn init_db_cmd(
     app_handle: tauri::AppHandle,
-    mut state: tauri::State<AppState>,
+    state: tauri::State<AppState>,
 ) -> Result<String, String> {
     let data_dir = app_handle
         .path()
@@ -193,8 +166,12 @@ fn init_db_cmd(
 
     let db_path = data_dir.join("wordle.db");
 
-    let db = Database::open(&db_path).map_err(|e| e.to_string())?;
-    *state.db.lock().unwrap() = Some(db);
+    let db = Database::open(&db_path)
+        .map_err(|_| "Failed to initialize database".to_string())?;
+    *state
+        .db
+        .lock()
+        .map_err(|_| "Database state unavailable".to_string())? = Some(db);
 
-    Ok(format!("Database initialized at {:?}", db_path))
+    Ok("Database initialized".to_string())
 }

@@ -32,7 +32,7 @@ Wordle game suite built with Tauri (Rust backend), React (TypeScript frontend), 
 ### User Experience
 - Tile animations on feedback
 - Notification on win
-- System tray integration
+- Native desktop window integration
 - Works on different screen sizes
 
 ### Security and Privacy

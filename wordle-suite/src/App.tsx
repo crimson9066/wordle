@@ -107,6 +107,7 @@ function App() {
       const result = await invoke("make_guess_cmd", {
         request: {
           game_id: gameState.id,
+          player_id: gameState.player_id,
           guess: currentGuess,
         },
       });
